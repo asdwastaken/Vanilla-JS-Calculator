@@ -19,8 +19,8 @@ numbers.forEach(num => {
         if (currentInputArea.textContent.startsWith('0') && !currentInputArea.textContent.includes('.')) {
             currentInputArea.textContent += '.';
 
-            if(currentInputArea.textContent.includes('.'))
-            return;
+            if (currentInputArea.textContent.includes('.'))
+                return;
         }
 
         currentInputArea.textContent += num.textContent;
@@ -43,7 +43,13 @@ absoluteValueButton.addEventListener('click', () => {
 })
 
 percentButton.addEventListener('click', () => {
-    currentInputArea.textContent = Number(currentInputArea.textContent) / 100;
+    if (initialInputArea.textContent) {
+        currentInputArea.textContent = Number(currentInputArea.textContent) * Number(initialInputArea.textContent) / 100;
+
+    } else {
+        currentInputArea.textContent = Number(currentInputArea.textContent) / 100;
+
+    }
 
 })
 

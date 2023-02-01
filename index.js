@@ -5,11 +5,9 @@ let currentInputArea = document.querySelector('.current-input');
 let arithmeticOperations = document.querySelectorAll('.arithmetic');
 let equalsButton = document.querySelector('#equals-button');
 let allClearButton = document.getElementById('all-clear-button');
+let absoluteValueButton = document.getElementById('abs-value-button');
+let percentButton = document.getElementById('percent-button');
 
-
-
-
-console.log('hi there');
 
 
 
@@ -18,96 +16,17 @@ numbers.forEach(num => {
     num.addEventListener('click', () => {
         if (num.textContent == '.' && currentInputArea.textContent.includes('.')) return;
 
+        if (currentInputArea.textContent.startsWith('0') && !currentInputArea.textContent.includes('.')) {
+            currentInputArea.textContent += '.';
+
+            if(currentInputArea.textContent.includes('.'))
+            return;
+        }
+
         currentInputArea.textContent += num.textContent;
 
     })
 })
-
-let activeButton = null;
-
-arithmeticOperations.forEach(operation => {
-
-
-    operation.addEventListener('click', (e) => {
-
-        if (activeButton) {
-            activeButton.style.backgroundColor = 'rgb(255, 188, 63)';
-        }
-        operation.style.backgroundColor = 'lightblue';
-
-        activeButton = operation;
-
-
-        if (operation.style.backgroundColor == 'lightblue') {
-
-            if (!initialInputArea.textContent) {
-
-                initialInputArea.textContent = currentInputArea.textContent;
-                currentInputArea.textContent = '';
-
-            } else if (initialInputArea.textContent && operation.textContent == '+') {
-                if (currentInputArea.textContent) {
-
-                    equalsButton.addEventListener('click', () => {
-                        if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '+') {
-                            initialInputArea.textContent = Number(currentInputArea.textContent) + Number(initialInputArea.textContent);
-                            currentInputArea.textContent = '';
-                        }
-
-                    })
-
-                }
-            } else if (initialInputArea.textContent && operation.textContent == '-') {
-                if (currentInputArea.textContent) {
-
-                    equalsButton.addEventListener('click', () => {
-                        if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '-') {
-                            initialInputArea.textContent = Number(initialInputArea.textContent) - Number(currentInputArea.textContent);
-                            currentInputArea.textContent = '';
-                        }
-                    })
-                }
-
-            } else if (initialInputArea.textContent && operation.textContent == 'x') {
-                if (currentInputArea.textContent) {
-
-                    equalsButton.addEventListener('click', () => {
-                        if (operation.style.backgroundColor == 'lightblue' && operation.textContent == 'x') {
-                            initialInputArea.textContent = Number(currentInputArea.textContent) * Number(initialInputArea.textContent);
-                            currentInputArea.textContent = '';
-                        }
-                    })
-
-                }
-            } else if (initialInputArea.textContent && operation.textContent == '÷') {
-                if (currentInputArea.textContent) {
-
-                    equalsButton.addEventListener('click', () => {
-                        if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '÷') {
-                            initialInputArea.textContent = Number(initialInputArea.textContent) / Number(currentInputArea.textContent);
-                            currentInputArea.textContent = '';
-                        }
-                    })
-
-                }
-            }
-
-        }
-
-
-
-
-    })
-
-
-
-
-})
-
-
-
-
-
 
 
 allClearButton.addEventListener('click', () => {
@@ -117,9 +36,130 @@ allClearButton.addEventListener('click', () => {
 })
 
 
+absoluteValueButton.addEventListener('click', () => {
+    if (Number(currentInputArea.textContent) != 0) {
+        currentInputArea.textContent = Number(currentInputArea.textContent) * -1;
+    }
+})
+
+percentButton.addEventListener('click', () => {
+    currentInputArea.textContent = Number(currentInputArea.textContent) / 100;
+
+})
 
 
 
+
+let activeButton = null;
+let result = '';
+
+arithmeticOperations.forEach(operation => {
+
+    operation.addEventListener('click', () => {
+
+        if (activeButton) {
+            activeButton.style.backgroundColor = 'rgb(255, 188, 63)';
+        }
+
+        operation.style.backgroundColor = 'lightblue';
+        activeButton = operation;
+
+
+        if (!initialInputArea.textContent) {
+
+            initialInputArea.textContent = currentInputArea.textContent;
+            currentInputArea.textContent = '';
+        }
+
+        if (operation.textContent == '+' && operation.style.backgroundColor == 'lightblue') {
+
+            equalsButton.addEventListener('click', () => {
+
+                if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '+') {
+                    add();
+
+                }
+            })
+
+        } else if (operation.textContent == '-' && operation.style.backgroundColor == 'lightblue') {
+
+            equalsButton.addEventListener('click', () => {
+                if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '-') {
+                    subtract();
+
+                }
+            })
+
+        } else if (operation.textContent == 'x' && operation.style.backgroundColor == 'lightblue') {
+
+            equalsButton.addEventListener('click', () => {
+                if (operation.style.backgroundColor == 'lightblue' && operation.textContent == 'x') {
+                    multiply();
+
+                }
+            })
+
+        } else if (operation.textContent == '÷' && operation.style.backgroundColor == 'lightblue') {
+
+            equalsButton.addEventListener('click', () => {
+                if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '÷') {
+                    divide();
+                }
+            })
+        }
+    })
+
+})
+
+
+
+
+
+
+function add() {
+    if (!currentInputArea.textContent == '') {
+
+        result = Number(currentInputArea.textContent) + Number(initialInputArea.textContent);
+        initialInputArea.textContent = result;
+        currentInputArea.textContent = '';
+
+    }
+}
+
+function subtract() {
+    if (!currentInputArea.textContent == '') {
+
+        result = Number(initialInputArea.textContent) - Number(currentInputArea.textContent);
+        initialInputArea.textContent = result;
+        currentInputArea.textContent = '';
+
+    }
+}
+
+
+
+function divide() {
+    if (!currentInputArea.textContent == '') {
+
+        if (Number(currentInputArea.textContent) == 0) return;
+        result = Number(initialInputArea.textContent) / Number(currentInputArea.textContent);
+        initialInputArea.textContent = result;
+        currentInputArea.textContent = '';
+
+    }
+}
+
+
+
+function multiply() {
+    if (!currentInputArea.textContent == '') {
+
+        result = Number(initialInputArea.textContent) * Number(currentInputArea.textContent);
+        initialInputArea.textContent = result;
+        currentInputArea.textContent = '';
+
+    }
+}
 
 
 

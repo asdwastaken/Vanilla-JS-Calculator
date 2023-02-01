@@ -78,7 +78,7 @@ arithmeticOperations.forEach(operation => {
         }
 
         if (operation.textContent == '+' && operation.style.backgroundColor == 'lightblue') {
-
+            add();
             equalsButton.addEventListener('click', () => {
 
                 if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '+') {
@@ -88,7 +88,7 @@ arithmeticOperations.forEach(operation => {
             })
 
         } else if (operation.textContent == '-' && operation.style.backgroundColor == 'lightblue') {
-
+            subtract();
             equalsButton.addEventListener('click', () => {
                 if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '-') {
                     subtract();
@@ -97,7 +97,7 @@ arithmeticOperations.forEach(operation => {
             })
 
         } else if (operation.textContent == 'x' && operation.style.backgroundColor == 'lightblue') {
-
+            multiply();
             equalsButton.addEventListener('click', () => {
                 if (operation.style.backgroundColor == 'lightblue' && operation.textContent == 'x') {
                     multiply();
@@ -106,7 +106,7 @@ arithmeticOperations.forEach(operation => {
             })
 
         } else if (operation.textContent == '÷' && operation.style.backgroundColor == 'lightblue') {
-
+            divide();
             equalsButton.addEventListener('click', () => {
                 if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '÷') {
                     divide();

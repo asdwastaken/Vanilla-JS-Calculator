@@ -9,6 +9,8 @@ let absoluteValueButton = document.getElementById('abs-value-button');
 let percentButton = document.getElementById('percent-button');
 
 
+let activeButton = null;
+let result = '';
 
 
 
@@ -19,8 +21,10 @@ numbers.forEach(num => {
         if (currentInputArea.textContent.startsWith('0') && !currentInputArea.textContent.includes('.')) {
             currentInputArea.textContent += '.';
 
-            if (currentInputArea.textContent.includes('.'))
+            if (currentInputArea.textContent.includes('.')) {
                 return;
+            }
+
         }
 
         currentInputArea.textContent += num.textContent;
@@ -29,10 +33,12 @@ numbers.forEach(num => {
 })
 
 
+
 allClearButton.addEventListener('click', () => {
     currentInputArea.textContent = '';
     initialInputArea.textContent = '';
     arithmeticOperations.forEach(operation => operation.style.backgroundColor = 'rgb(255, 188, 63)');
+
 })
 
 
@@ -48,16 +54,11 @@ percentButton.addEventListener('click', () => {
 
     } else {
         currentInputArea.textContent = Number(currentInputArea.textContent) / 100;
-
     }
 
 })
 
 
-
-
-let activeButton = null;
-let result = '';
 
 arithmeticOperations.forEach(operation => {
 
@@ -70,49 +71,32 @@ arithmeticOperations.forEach(operation => {
         operation.style.backgroundColor = 'lightblue';
         activeButton = operation;
 
-
         if (!initialInputArea.textContent) {
 
             initialInputArea.textContent = currentInputArea.textContent;
             currentInputArea.textContent = '';
         }
 
-        if (operation.textContent == '+' && operation.style.backgroundColor == 'lightblue') {
-            add();
-            equalsButton.addEventListener('click', () => {
+        equalsButton.addEventListener('click', () => {
+            if (!currentInputArea.textContent == '') {
 
                 if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '+') {
                     add();
 
-                }
-            })
-
-        } else if (operation.textContent == '-' && operation.style.backgroundColor == 'lightblue') {
-            subtract();
-            equalsButton.addEventListener('click', () => {
-                if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '-') {
+                } else if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '-') {
                     subtract();
 
-                }
-            })
-
-        } else if (operation.textContent == 'x' && operation.style.backgroundColor == 'lightblue') {
-            multiply();
-            equalsButton.addEventListener('click', () => {
-                if (operation.style.backgroundColor == 'lightblue' && operation.textContent == 'x') {
+                } else if (operation.style.backgroundColor == 'lightblue' && operation.textContent == 'x') {
                     multiply();
 
-                }
-            })
-
-        } else if (operation.textContent == '÷' && operation.style.backgroundColor == 'lightblue') {
-            divide();
-            equalsButton.addEventListener('click', () => {
-                if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '÷') {
+                } else if (operation.style.backgroundColor == 'lightblue' && operation.textContent == '÷') {
                     divide();
                 }
-            })
-        }
+            }
+        })
+
+
+
     })
 
 })
@@ -120,52 +104,31 @@ arithmeticOperations.forEach(operation => {
 
 
 
-
-
 function add() {
-    if (!currentInputArea.textContent == '') {
+    result = Number(currentInputArea.textContent) + Number(initialInputArea.textContent);
+    initialInputArea.textContent = result;
+    currentInputArea.textContent = '';
 
-        result = Number(currentInputArea.textContent) + Number(initialInputArea.textContent);
-        initialInputArea.textContent = result;
-        currentInputArea.textContent = '';
-
-    }
 }
 
 function subtract() {
-    if (!currentInputArea.textContent == '') {
+    result = Number(initialInputArea.textContent) - Number(currentInputArea.textContent);
+    initialInputArea.textContent = result;
+    currentInputArea.textContent = '';
 
-        result = Number(initialInputArea.textContent) - Number(currentInputArea.textContent);
-        initialInputArea.textContent = result;
-        currentInputArea.textContent = '';
-
-    }
 }
-
-
 
 function divide() {
-    if (!currentInputArea.textContent == '') {
+    if (Number(currentInputArea.textContent) == 0) return;
+    result = Number(initialInputArea.textContent) / Number(currentInputArea.textContent);
+    initialInputArea.textContent = result;
+    currentInputArea.textContent = '';
 
-        if (Number(currentInputArea.textContent) == 0) return;
-        result = Number(initialInputArea.textContent) / Number(currentInputArea.textContent);
-        initialInputArea.textContent = result;
-        currentInputArea.textContent = '';
-
-    }
 }
-
-
 
 function multiply() {
-    if (!currentInputArea.textContent == '') {
+    result = Number(initialInputArea.textContent) * Number(currentInputArea.textContent);
+    initialInputArea.textContent = result;
+    currentInputArea.textContent = '';
 
-        result = Number(initialInputArea.textContent) * Number(currentInputArea.textContent);
-        initialInputArea.textContent = result;
-        currentInputArea.textContent = '';
-
-    }
 }
-
-
-

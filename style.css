@@ -49,6 +49,15 @@ button:hover {
     align-items: center;
 }
 
+#temp-result{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: white;
+    grid-column: span 4;
+    height: 40px;
+}
+
 .current-input {
     grid-column: span 4;
     height: 80px;
